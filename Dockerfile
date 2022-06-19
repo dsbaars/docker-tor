@@ -1,4 +1,4 @@
-ARG VERSION=0.4.7.7
+ARG VERSION=0.4.7.8
 
 ARG USER=toruser
 ARG UID=1000
@@ -11,10 +11,12 @@ RUN apt update
 RUN apt -y install gpg gpg-agent curl
 
 # Add tor key
-ENV KEYS 514102454D0A87DB0767A1EBBE6A0531C18A9179 B74417EDDF22AC9F9E90F49142E86A2A11F48D36
+ENV KEYS 514102454D0A87DB0767A1EBBE6A0531C18A9179 B74417EDDF22AC9F9E90F49142E86A2A11F48D36 2133BC600AB133E1D826D173FE43009C4607B1FB
 
-#RUN curl -s https://openpgpkey.torproject.org/.well-known/openpgpkey/torproject.org/hu/kounek7zrdx745qydx6p59t9mqjpuhdf |gpg --import -
 RUN gpg --keyserver keyserver.ubuntu.com --recv-keys $KEYS 
+#RUN gpg --auto-key-locate nodefault,wkd --locate-keys ahf@torproject.org
+#RUN gpg --auto-key-locate nodefault,wkd --locate-keys dgoulet@torproject.org
+#RUN gpg --auto-key-locate nodefault,wkd --locate-keys nickm@torproject.org
 
 RUN gpg --list-keys | tail -n +3 | tee /tmp/keys.txt && \
     gpg --list-keys $KEYS | diff - /tmp/keys.txt
@@ -61,7 +63,7 @@ ARG VERSION
 ARG USER
 ARG DIR
 
-LABEL maintainer="nolim1t (@nolim1t)"
+LABEL maintainer="dsbaars (@dsbaars)"
 
 # Libraries (linked)
 COPY  --from=builder /usr/lib /usr/lib
