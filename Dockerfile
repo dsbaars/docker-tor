@@ -1,4 +1,4 @@
-ARG VERSION=0.4.7.8
+ARG VERSION=0.4.7.10
 
 ARG USER=toruser
 ARG UID=1000
@@ -64,6 +64,9 @@ ARG USER
 ARG DIR
 
 LABEL maintainer="dsbaars (@dsbaars)"
+LABEL org.opencontainers.image.source https://github.com/dsbaars/docker-tor
+LABEL org.opencontainers.image.version $VERSION
+LABEL org.opencontainers.image.title dsbaars/tor
 
 # Libraries (linked)
 COPY  --from=builder /usr/lib /usr/lib
